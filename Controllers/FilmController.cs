@@ -34,6 +34,13 @@ public class FilmController : Controller
         return Created("/", FilmResponse);
     }
 
+    [HttpDelete("films/{id}")]
+    public IActionResult Delete([FromRoute] int id)
+    {
+        _films.Delete(id);
+        return Ok();
+    }
+
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {

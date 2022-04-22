@@ -7,6 +7,7 @@ namespace film_db.Repository
         List<Director> GetAllDirectors();
         ExtendedDirectorResponse GetById(int id);
         Director Create(CreateDirectorRequest director);
+        Director Update(int id, UpdateDirectorRequest update);
         void Delete (int id);
         List<Film> GetFilms(int id);
     }
@@ -47,6 +48,20 @@ namespace film_db.Repository
             });
             _context.SaveChanges();
             return result.Entity;
+        }
+
+        public Director Update(int id, UpdateDirectorRequest update)
+        {
+            var director = _context.Directors.Single(d => d.Id == id);
+            director.Firstname = update.Firstname;
+            director.Surname = update.Surname;
+            director.Age = update.Age;
+            director.PhotoUrl = update.PhotoUrl;
+
+            _context.Directors.Update(director);
+            _context.SaveChanges();
+
+            return director;
         }
 
         public void Delete(int id)

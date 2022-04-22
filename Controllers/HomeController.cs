@@ -9,11 +9,13 @@ public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
     private readonly IFilmsRepo _films;
+    private readonly IDirectorsRepo _directors;
 
-    public HomeController(ILogger<HomeController> logger, IFilmsRepo films)
+    public HomeController(ILogger<HomeController> logger, IFilmsRepo films, IDirectorsRepo directors)
     {
         _logger = logger;
         _films = films;
+        _directors = directors;
     }
 
     public IActionResult Index()
@@ -25,6 +27,11 @@ public class HomeController : Controller
     {
         var films = _films.GetAllFilms();
         return View(films);
+    }
+    public IActionResult Directors()
+    {
+        var directors = _directors.GetAllDirectors();
+        return View(directors);
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

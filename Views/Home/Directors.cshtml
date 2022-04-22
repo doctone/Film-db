@@ -1,0 +1,25 @@
+﻿@model List<Director>
+
+@{
+    ViewData["Title"] = "Director List";
+}
+<h1>@ViewData["Title"]</h1>
+<div class="text-center">
+    <h1 class="display-4 mb-4">Browse our Directors</h1>
+    <ol class="d-flex flex-wrap">
+        @foreach (var Director in Model)
+        {
+        <li style="list-style: none;" class="me-4">
+            <div class="card mb-2" style="width: 12rem;">
+                <img src="@Director.PhotoUrl" class="card-img-top" alt="@Director.Surname">
+                <div class="card-body">
+                    <h5 class="card-title">@Director.Firstname @Director.Surname</h5>
+                    <p>@Director.Age</p>
+                    <a href="#" class="btn btn-primary">More info</a>
+                </div>
+            </div>
+        </li>
+        }
+
+    </ol>
+    </div>

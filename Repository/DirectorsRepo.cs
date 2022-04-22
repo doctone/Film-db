@@ -5,7 +5,7 @@ namespace film_db.Repository
     public interface IDirectorsRepo
     {
         List<Director> GetAllDirectors();
-        Director GetById(int id);
+        ExtendedDirectorResponse GetById(int id);
         Director Create(CreateDirectorRequest director);
         void Delete (int id);
         List<Film> GetFilms(int id);
@@ -19,9 +19,19 @@ namespace film_db.Repository
             return _context.Directors.ToList();
         }
 
-        public Director GetById(int id)
+        public ExtendedDirectorResponse GetById(int id)
         {
-            return _context.Directors.Single(d => d.Id == id);
+            var director = _context.Directors.Single(d => d.Id == id);
+            var films = GetFilms(id);
+            var extDirector = new ExtendedDirectorResponse
+            {
+                Id = director.Id,
+                Firstname = director.Firstname,
+                Surname = director.Surname,
+                Age = director.Age,
+                Films = films
+            };
+            return extDirector;
         }
 
         public Director Create(CreateDirectorRequest director)
@@ -39,14 +49,14 @@ namespace film_db.Repository
 
         public void Delete(int id)
         {
-            var director = GetById(id);
+            var director = _context.Directors.Single(d => d.Id == id);
             _context.Directors.Remove(director);
             _context.SaveChanges();
         }
 
         public List<Film> GetFilms(int id)
         {
-            var director = GetById(id);
+            var director = _context.Directors.Single(d => d.Id == id);
             return _context.Films
             .Where(film => film.Director == director).ToList();
         }

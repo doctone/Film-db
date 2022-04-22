@@ -16,7 +16,7 @@ public class DirectorController : Controller
         _directors = directors;
     }
 
-    [HttpGet("")]
+    [HttpGet("directors")]
     public ActionResult<List<Director>> GetAllDirectors()
     {
         return _directors.GetAllDirectors();
@@ -27,6 +27,13 @@ public class DirectorController : Controller
     {
         return _directors.GetFilms(id);
     }
+
+    [HttpGet("directors/{id}")]
+    public ActionResult<ExtendedDirectorResponse> GetById([FromRoute] int id)
+    {
+        return _directors.GetById(id);
+    }
+
 
     [HttpPost("create")]
     public IActionResult Create([FromBody] CreateDirectorRequest newDirector)

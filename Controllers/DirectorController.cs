@@ -34,7 +34,6 @@ public class DirectorController : Controller
         return _directors.GetById(id);
     }
 
-
     [HttpPost("create")]
     public IActionResult Create([FromBody] CreateDirectorRequest newDirector)
     {
@@ -46,6 +45,17 @@ public class DirectorController : Controller
         var directorResponse = new DirectorResponse(director);
         return Created("/", directorResponse);
     }
+
+     [HttpPatch("directors/{id}/update")]
+        public ActionResult<DirectorResponse> Update([FromRoute] int id, [FromBody] UpdateDirectorRequest update)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var director = _directors.Update(id, update);
+            return new DirectorResponse(director);
+        }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()

@@ -12,5 +12,6 @@ namespace film_db.Models
         public string? Firstname => _director.Firstname;
         public string? Surname => _director.Surname;
         public int Age => _director.Age;
+        public string PhotoUrl => _director.PhotoUrl;
     }
 }

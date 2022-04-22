@@ -29,7 +29,8 @@ namespace film_db.Repository
                 Firstname = director.Firstname,
                 Surname = director.Surname,
                 Age = director.Age,
-                Films = films
+                Films = films,
+                PhotoUrl = director.PhotoUrl
             };
             return extDirector;
         }
@@ -42,6 +43,7 @@ namespace film_db.Repository
                 Firstname = director.Firstname,
                 Surname = director.Surname,
                 Age = director.Age,
+                PhotoUrl = director.PhotoUrl
             });
             _context.SaveChanges();
             return result.Entity;

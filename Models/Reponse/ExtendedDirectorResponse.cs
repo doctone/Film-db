@@ -7,5 +7,7 @@ namespace film_db.Models
         public string? Surname { get; set; }
         public int Age { get; set; }
         public List<Film> Films { get; set; }
+        
+        public string PhotoUrl { get; set; }
     }
 }

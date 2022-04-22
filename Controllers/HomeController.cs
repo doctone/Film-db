@@ -1,16 +1,19 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using film_db.Models;
+using film_db.Repository;
 
 namespace film_db.Controllers;
 
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
+    private readonly IFilmsRepo _films;
 
-    public HomeController(ILogger<HomeController> logger)
+    public HomeController(ILogger<HomeController> logger, IFilmsRepo films)
     {
         _logger = logger;
+        _films = films;
     }
 
     public IActionResult Index()
@@ -18,9 +21,10 @@ public class HomeController : Controller
         return View();
     }
 
-    public IActionResult Privacy()
+    public IActionResult Films()
     {
-        return View();
+        var films = _films.GetAllFilms();
+        return View(films);
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

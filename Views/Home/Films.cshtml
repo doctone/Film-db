@@ -1,0 +1,25 @@
+﻿@model List<Film>
+
+@{
+    ViewData["Title"] = "Film List";
+}
+<h1>@ViewData["Title"]</h1>
+<div class="text-center">
+    <h1 class="display-4 mb-4">Browse our films</h1>
+    <ol class="d-flex flex-wrap">
+        @foreach (var film in Model)
+        {
+        <li style="list-style: none;" class="me-4">
+            <div class="card mb-2" style="width: 12rem;">
+                <img src="@film.ImageUrl" class="card-img-top" alt="@film.Title">
+                <div class="card-body">
+                    <h5 class="card-title">@film.Title</h5>
+                    <p>@film.Year, by @film.Director?.Firstname, @film.Director?.Surname</p>
+                    <a href="#" class="btn btn-primary">More info</a>
+                </div>
+            </div>
+        </li>
+        }
+
+    </ol>
+    </div>

@@ -7,6 +7,7 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped<IDirectorsRepo, DirectorsRepo>();
 builder.Services.AddScoped<IFilmsRepo, FilmsRepo>();
+builder.Services.AddScoped<IActorsRepo, ActorsRepo>();
 
 
 var app = builder.Build();

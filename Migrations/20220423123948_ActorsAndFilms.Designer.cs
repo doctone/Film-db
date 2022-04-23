@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using film_db;
 
@@ -11,9 +12,10 @@ using film_db;
 namespace film_db.Migrations
 {
     [DbContext(typeof(FilmContext))]
-    partial class FilmContextModelSnapshot : ModelSnapshot
+    [Migration("20220423123948_ActorsAndFilms")]
+    partial class ActorsAndFilms
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,21 +23,6 @@ namespace film_db.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
-
-            modelBuilder.Entity("ActorFilm", b =>
-                {
-                    b.Property<int>("ActorsId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("FilmsId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ActorsId", "FilmsId");
-
-                    b.HasIndex("FilmsId");
-
-                    b.ToTable("ActorFilm");
-                });
 
             modelBuilder.Entity("film_db.Models.Actor", b =>
                 {
@@ -48,11 +35,10 @@ namespace film_db.Migrations
                     b.Property<DateTime>("Dob")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Firstname")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("FilmId")
+                        .HasColumnType("int");
 
-                    b.Property<string>("PhotoUrl")
+                    b.Property<string>("Firstname")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -62,7 +48,9 @@ namespace film_db.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Actors");
+                    b.HasIndex("FilmId");
+
+                    b.ToTable("Actor");
                 });
 
             modelBuilder.Entity("film_db.Models.Director", b =>
@@ -118,19 +106,11 @@ namespace film_db.Migrations
                     b.ToTable("Films");
                 });
 
-            modelBuilder.Entity("ActorFilm", b =>
+            modelBuilder.Entity("film_db.Models.Actor", b =>
                 {
-                    b.HasOne("film_db.Models.Actor", null)
-                        .WithMany()
-                        .HasForeignKey("ActorsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("film_db.Models.Film", null)
-                        .WithMany()
-                        .HasForeignKey("FilmsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany("Actors")
+                        .HasForeignKey("FilmId");
                 });
 
             modelBuilder.Entity("film_db.Models.Film", b =>
@@ -142,6 +122,11 @@ namespace film_db.Migrations
                         .IsRequired();
 
                     b.Navigation("Director");
+                });
+
+            modelBuilder.Entity("film_db.Models.Film", b =>
+                {
+                    b.Navigation("Actors");
                 });
 #pragma warning restore 612, 618
         }
